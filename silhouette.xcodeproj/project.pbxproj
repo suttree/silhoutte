@@ -422,6 +422,7 @@
 				AE0F355113981D3300B32D35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

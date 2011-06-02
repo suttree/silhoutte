@@ -5,190 +5,182 @@
 
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 
-	<!-- iPad/iPhone specific css below, add after your main css >
-	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
-	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
-	-->
-	<!-- If you application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
-	<script type="text/javascript" charset="utf-8" src="phonegap.0.9.5.1.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-
-
-	// If you want to prevent dragging, uncomment this section
-	/*
-	function preventBehavior(e) 
-	{ 
-      e.preventDefault(); 
-    };
-	document.addEventListener("touchmove", preventBehavior, false);
-	*/
+		<!-- iPad/iPhone specific css below, add after your main css >
+		<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
+		<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
+		-->
+		<!-- If you application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
+		<script type="text/javascript" charset="utf-8" src="phonegap.0.9.5.1.min.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+	  <script type="text/javascript" charset="utf-8">
+			// If you want to prevent dragging, uncomment this section
+			function preventBehavior(e) 
+			{ 
+		      e.preventDefault(); 
+		    };
+			document.addEventListener("touchmove", preventBehavior, false);
 	
-	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-	for more details -jm */
-	/*
-	function handleOpenURL(url)
-	{
-		// TODO: do something with the url passed in.
-	}
-	*/
+			/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+			see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+			for more details -jm */
+			/*
+			function handleOpenURL(url)
+			{
+				// TODO: do something with the url passed in.
+			}
+			*/
 	
-	function onBodyLoad()
-	{		
-		document.addEventListener("deviceready",onDeviceReady,false);
-	}
+			function onBodyLoad()
+			{		
+				document.addEventListener("deviceready",onDeviceReady,false);
+			}
 	
-	/* When this function is called, PhoneGap has been initialized and is ready to roll */
-	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-	for more details -jm */
-	function onDeviceReady()
-	{
-		// do your thing!
-		navigator.notification.alert("PhoneGap is working")
-	}
-    
-    </script>
-  </head>
-  <body onload="onBodyLoad()">
-  	  <h1>troisen</h1>
-
-      <script>
-          function record()
-          {        
-              if($('#record-button').attr('src') == 'stop.png')
-              {
-                  stopRecord();
-              }
-              else
-              {
-                  startRecord();
-              }
-          }
-          
-          function play()
+			/* When this function is called, PhoneGap has been initialized and is ready to roll */
+			/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
+			see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
+			for more details -jm */
+			function onDeviceReady()
+			{
+			// do your thing!
+			//navigator.notification.alert("PhoneGap is working")
+      function record()
+      {
+          if($('#record-button').attr('src') == 'stop.png')
           {
-              if($('#play-button').attr('src') == 'play.png')
-              {
-                  playRecord();
-              }
-              else
-              {
-                  stopPlayback();
-              }
+              stopRecord();
           }
-          
-          function deleteAudio()
+          else
           {
-              if($('#cd-button').attr('src') == 'help.png')
-              {
-                  alert("Touch the record button to record a voice memo.");
-              }
-              else
-              {
-                  if(confirm("Really delete audio recording?"))
-                  {
-                      deleteRecording();
-                  }
-              }
+              startRecord();
           }
-          
-          function deleteRecording()
+      }
+      
+      function play()
+      {
+          if($('#play-button').attr('src') == 'play.png')
           {
-              if(navigator.audio)
-              {
-                  console.log("resetting audio");
-                  console.log("removing old file at url " + navigator.audio.src);
-                  var path = navigator.audio.src.substr('documents://'.length);
-                  console.log("Deleting audio file at path: " + path + " from url: "+navigator.audio.src);
-                  navigator.fileMgr.deleteFile(path,file_success,file_failed);
-                  navigator.audio = null;
-                  $('#cd-button').attr('src','help.png');
-              }
-              else
-              {
-                  alert("Touch the record button to record a voice memo.");
-              }
+              playRecord();
           }
-          
-          function startRecord()
+          else
           {
-              console.log("start record...");
-              if(navigator.audio && confirm("Delete existing recording?"))
+              stopPlayback();
+          }
+      }
+      
+      function deleteAudio()
+      {
+          if($('#cd-button').attr('src') == 'help.png')
+          {
+              alert("Touch the record button to record a voice memo.");
+          }
+          else
+          {
+              if(confirm("Really delete audio recording?"))
               {
                   deleteRecording();
               }
-          
-              console.log("Initializing audio");
-              navigator.audio = new Media(null,recording_success,recording_failure);
-              $('#cd-button').attr('src','cd.png');
-              console.log("Starting recording...");
-              navigator.audio.startAudioRecord();
-              navigator.notification.activityStart();
-              $('#record-button').attr('src','stop.png');
-              navigator.audio.startAudioRecord();
           }
-
-          function stopRecord()
+      }
+      
+      function deleteRecording()
+      {
+          if(navigator.audio)
           {
-              console.log("Stopping recording...");
-              $('#record-button').attr('src','record.png');
-              navigator.notification.activityStop();
-              $('#cd-button').attr('src','cd_remove.png');
-              navigator.audio.stopAudioRecord();
-          }
-          
-          function playRecord()
-          {
-              console.log("Playing recording...");
-              if(navigator.audio)
-              {
-                  $('#play-button').attr('src','stop.png');
-                  navigator.notification.activityStart();
-                  navigator.audio.play();
-              }
-              else
-              {
-                  alert("No audio. Touch the record button to record some.");
-              }
-          }
-          
-          function stopPlayback()
-          {
-              console.log("Stopping playback...");
-              $('#play-button').attr('src','play.png');
-              navigator.notification.activityStop();
-              navigator.audio.stop();
-          }
-          
-          function file_success()
-          {
-              console.log("file deleted");
+              console.log("resetting audio");
+              console.log("removing old file at url " + navigator.audio.src);
+              var path = navigator.audio.src.substr('documents://'.length);
+              console.log("Deleting audio file at path: " + path + " from url: "+navigator.audio.src);
+              navigator.fileMgr.deleteFile(path,file_success,file_failed);
+              navigator.audio = null;
               $('#cd-button').attr('src','help.png');
           }
-          
-          function file_failed()
+          else
           {
-              console.log("file not deleted");
+              alert("Touch the record button to record a voice memo.");
           }
-          
-          function recording_success(url)
-          {
-              console.log("Recording success callback");
-              navigator.notification.activityStop();  
-              $('#record-button').attr('src','record.png');
-              $('#play-button').attr('src','play.png');
-              $('#cd-button').attr('src','cd_remove.png');
-          }
-          
-          function recording_failure(error)
-          {
-              navigator.notification.activityStop();  
-              alert("Recording failed: " + error);
-              console.log("Recording failed: " + error);
-          }
-      </script>
+      }
       
+      function startRecord()
+      {
+          console.log("start record...");
+          if(navigator.audio && confirm("Delete existing recording?"))
+          {
+              deleteRecording();
+          }
+      
+          console.log("Initializing audio");
+          navigator.audio = new Media(null,recording_success,recording_failure);
+          $('#cd-button').attr('src','cd.png');
+          console.log("Starting recording...");
+          navigator.audio.startAudioRecord();
+          navigator.notification.activityStart();
+          $('#record-button').attr('src','stop.png');
+          navigator.audio.startAudioRecord();
+      }
+
+      function stopRecord()
+      {
+          console.log("Stopping recording...");
+          $('#record-button').attr('src','record.png');
+          navigator.notification.activityStop();
+          $('#cd-button').attr('src','cd_remove.png');
+          navigator.audio.stopAudioRecord();
+      }
+      
+      function playRecord()
+      {
+          console.log("Playing recording...");
+          if(navigator.audio)
+          {
+              $('#play-button').attr('src','stop.png');
+              navigator.notification.activityStart();
+              navigator.audio.play();
+          }
+          else
+          {
+              alert("No audio. Touch the record button to record some.");
+          }
+      }
+      
+      function stopPlayback()
+      {
+          console.log("Stopping playback...");
+          $('#play-button').attr('src','play.png');
+          navigator.notification.activityStop();
+          navigator.audio.stop();
+      }
+      
+      function file_success()
+      {
+          console.log("file deleted");
+          $('#cd-button').attr('src','help.png');
+      }
+      
+      function file_failed()
+      {
+          console.log("file not deleted");
+      }
+      
+      function recording_success(url)
+      {
+          console.log("Recording success callback");
+          navigator.notification.activityStop();  
+          $('#record-button').attr('src','record.png');
+          $('#play-button').attr('src','play.png');
+          $('#cd-button').attr('src','cd_remove.png');
+      }
+      
+      function recording_failure(error)
+      {
+          navigator.notification.activityStop();  
+          alert("Recording failed: " + error);
+          console.log("Recording failed: " + error);
+      }
+		}
+  	</script>
+  </head>
+  <body onload="onBodyLoad()">
+  	  <h1>troisen</h1>
       <table style="width: 100%" class="grid">
           <tr>
               <td><input type="image" id="record-button" src="record.png" onclick="return false;" ontouchstart="record(); return false;" ontouchend="return false;"></td>
