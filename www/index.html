@@ -51,8 +51,7 @@
     </script>
   </head>
   <body onload="onBodyLoad()">
-  	  <h1>Hey, it's PhoneGap!</h1>
-	  <p>Don't know how to get started? Check out <em><a href="http://github.com/phonegap/phonegap-start">PhoneGap Start</a></em>
+  	  <h1>troisen</h1>
 
       <script>
           function record()
@@ -98,10 +97,10 @@
           {
               if(navigator.audio)
               {
-                  debug.log("resetting audio");
-                  debug.log("removing old file at url " + navigator.audio.src);
+                  console.log("resetting audio");
+                  console.log("removing old file at url " + navigator.audio.src);
                   var path = navigator.audio.src.substr('documents://'.length);
-                  debug.log("Deleting audio file at path: " + path + " from url: "+navigator.audio.src);
+                  console.log("Deleting audio file at path: " + path + " from url: "+navigator.audio.src);
                   navigator.fileMgr.deleteFile(path,file_success,file_failed);
                   navigator.audio = null;
                   $('#cd-button').attr('src','help.png');
@@ -114,16 +113,16 @@
           
           function startRecord()
           {
-              debug.log("start record...");
+              console.log("start record...");
               if(navigator.audio && confirm("Delete existing recording?"))
               {
                   deleteRecording();
               }
           
-              debug.log("Initializing audio");
+              console.log("Initializing audio");
               navigator.audio = new Media(null,recording_success,recording_failure);
               $('#cd-button').attr('src','cd.png');
-              debug.log("Starting recording...");
+              console.log("Starting recording...");
               navigator.audio.startAudioRecord();
               navigator.notification.activityStart();
               $('#record-button').attr('src','stop.png');
@@ -132,7 +131,7 @@
 
           function stopRecord()
           {
-              debug.log("Stopping recording...");
+              console.log("Stopping recording...");
               $('#record-button').attr('src','record.png');
               navigator.notification.activityStop();
               $('#cd-button').attr('src','cd_remove.png');
@@ -141,7 +140,7 @@
           
           function playRecord()
           {
-              debug.log("Playing recording...");
+              console.log("Playing recording...");
               if(navigator.audio)
               {
                   $('#play-button').attr('src','stop.png');
@@ -156,7 +155,7 @@
           
           function stopPlayback()
           {
-              debug.log("Stopping playback...");
+              console.log("Stopping playback...");
               $('#play-button').attr('src','play.png');
               navigator.notification.activityStop();
               navigator.audio.stop();
@@ -164,18 +163,18 @@
           
           function file_success()
           {
-              debug.log("file deleted");
+              console.log("file deleted");
               $('#cd-button').attr('src','help.png');
           }
           
           function file_failed()
           {
-              debug.log("file not deleted");
+              console.log("file not deleted");
           }
           
           function recording_success(url)
           {
-              debug.log("Recording success callback");
+              console.log("Recording success callback");
               navigator.notification.activityStop();  
               $('#record-button').attr('src','record.png');
               $('#play-button').attr('src','play.png');
@@ -186,7 +185,7 @@
           {
               navigator.notification.activityStop();  
               alert("Recording failed: " + error);
-              debug.log("Recording failed: " + error);
+              console.log("Recording failed: " + error);
           }
       </script>
       
