@@ -16,8 +16,8 @@
 			// If you want to prevent dragging, uncomment this section
 			function preventBehavior(e) 
 			{ 
-		      e.preventDefault(); 
-		    };
+		  	e.preventDefault(); 
+		  };
 			document.addEventListener("touchmove", preventBehavior, false);
 	
 			/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
@@ -41,142 +41,143 @@
 			for more details -jm */
 			function onDeviceReady()
 			{
-			// do your thing!
-			//navigator.notification.alert("PhoneGap is working")
-      function record()
-      {
-          if($('#record-button').attr('src') == 'stop.png')
-          {
-              stopRecord();
-          }
-          else
-          {
-              startRecord();
-          }
-      }
-      
-      function play()
-      {
-          if($('#play-button').attr('src') == 'play.png')
-          {
-              playRecord();
-          }
-          else
-          {
-              stopPlayback();
-          }
-      }
-      
-      function deleteAudio()
-      {
-          if($('#cd-button').attr('src') == 'help.png')
-          {
-              alert("Touch the record button to record a voice memo.");
-          }
-          else
-          {
-              if(confirm("Really delete audio recording?"))
-              {
-                  deleteRecording();
-              }
-          }
-      }
-      
-      function deleteRecording()
-      {
-          if(navigator.audio)
-          {
-              console.log("resetting audio");
-              console.log("removing old file at url " + navigator.audio.src);
-              var path = navigator.audio.src.substr('documents://'.length);
-              console.log("Deleting audio file at path: " + path + " from url: "+navigator.audio.src);
-              navigator.fileMgr.deleteFile(path,file_success,file_failed);
-              navigator.audio = null;
-              $('#cd-button').attr('src','help.png');
-          }
-          else
-          {
-              alert("Touch the record button to record a voice memo.");
-          }
-      }
-      
-      function startRecord()
-      {
-          console.log("start record...");
-          if(navigator.audio && confirm("Delete existing recording?"))
-          {
-              deleteRecording();
-          }
-      
-          console.log("Initializing audio");
-          navigator.audio = new Media(null,recording_success,recording_failure);
-          $('#cd-button').attr('src','cd.png');
-          console.log("Starting recording...");
-          navigator.audio.startAudioRecord();
-          navigator.notification.activityStart();
-          $('#record-button').attr('src','stop.png');
-          navigator.audio.startAudioRecord();
-      }
+				// do your thing!
+				//navigator.notification.alert("PhoneGap is working")
+			}
+			
+			function record()
+	    {        
+	        if($('#record-button').attr('src') == 'stop.png')
+	        {
+	            stopRecord();
+	        }
+	        else
+	        {
+	            startRecord();
+	        }
+	    }
 
-      function stopRecord()
-      {
-          console.log("Stopping recording...");
-          $('#record-button').attr('src','record.png');
-          navigator.notification.activityStop();
-          $('#cd-button').attr('src','cd_remove.png');
-          navigator.audio.stopAudioRecord();
-      }
-      
-      function playRecord()
-      {
-          console.log("Playing recording...");
-          if(navigator.audio)
-          {
-              $('#play-button').attr('src','stop.png');
-              navigator.notification.activityStart();
-              navigator.audio.play();
-          }
-          else
-          {
-              alert("No audio. Touch the record button to record some.");
-          }
-      }
-      
-      function stopPlayback()
-      {
-          console.log("Stopping playback...");
-          $('#play-button').attr('src','play.png');
-          navigator.notification.activityStop();
-          navigator.audio.stop();
-      }
-      
-      function file_success()
-      {
-          console.log("file deleted");
-          $('#cd-button').attr('src','help.png');
-      }
-      
-      function file_failed()
-      {
-          console.log("file not deleted");
-      }
-      
-      function recording_success(url)
-      {
-          console.log("Recording success callback");
-          navigator.notification.activityStop();  
-          $('#record-button').attr('src','record.png');
-          $('#play-button').attr('src','play.png');
-          $('#cd-button').attr('src','cd_remove.png');
-      }
-      
-      function recording_failure(error)
-      {
-          navigator.notification.activityStop();  
-          alert("Recording failed: " + error);
-          console.log("Recording failed: " + error);
-      }
-		}
+	    function play()
+	    {
+	        if($('#play-button').attr('src') == 'play.png')
+	        {
+	            playRecord();
+	        }
+	        else
+	        {
+	            stopPlayback();
+	        }
+	    }
+
+	    function deleteAudio()
+	    {
+	        if($('#cd-button').attr('src') == 'help.png')
+	        {
+	            alert("Touch the record button to record a voice memo.");
+	        }
+	        else
+	        {
+	            if(confirm("Really delete audio recording?"))
+	            {
+	                deleteRecording();
+	            }
+	        }
+	    }
+
+	    function deleteRecording()
+	    {
+	        if(navigator.audio)
+	        {
+	            console.log("resetting audio");
+	            console.log("removing old file at url " + navigator.audio.src);
+	            var path = navigator.audio.src.substr('documents://'.length);
+	            console.log("Deleting audio file at path: " + path + " from url: "+navigator.audio.src);
+	            navigator.fileMgr.deleteFile(path,file_success,file_failed);
+	            navigator.audio = null;
+	            $('#cd-button').attr('src','help.png');
+	        }
+	        else
+	        {
+	            alert("Touch the record button to record a voice memo.");
+	        }
+	    }
+
+			function startRecord()
+			{
+			        console.log("start record...");
+			        if(navigator.audio && confirm("Delete existing recording?"))
+			        {
+			            deleteRecording();
+			        }
+
+			        console.log("Initializing audio");
+			        navigator.audio = new Media(null,recording_success,recording_failure);
+			        $('#cd-button').attr('src','cd.png');
+			        console.log("Starting recording...");
+			        navigator.audio.startAudioRecord();
+			        navigator.notification.activityStart();
+			        $('#record-button').attr('src','stop.png');
+							navigator.audio.startAudioRecord();
+			}
+
+			function stopRecord()
+			{
+			        console.log("Stopping recording...");
+			        $('#record-button').attr('src','record.png');
+			        navigator.notification.activityStop();
+			        $('#cd-button').attr('src','cd_remove.png');
+							navigator.audio.stopAudioRecord();
+			}
+
+			function playRecord()
+			{
+			        console.log("Playing recording...");
+			        if(navigator.audio)
+			        {
+			            $('#play-button').attr('src','stop.png');
+			            navigator.notification.activityStart();
+			            navigator.audio.play();
+			        }
+			        else
+			        {
+			            alert("No audio. Touch the record button to record some.");
+			        }
+			}
+
+	    function stopPlayback()
+	    {
+	        console.log("Stopping playback...");
+	        $('#play-button').attr('src','play.png');
+	        navigator.notification.activityStop();
+					navigator.audio.stop();
+	    }
+
+	    function file_success()
+	    {
+	        console.log("file deleted");
+	        $('#cd-button').attr('src','help.png');
+	    }
+
+	    function file_failed()
+	    {
+	        console.log("file not deleted");
+	    }
+
+	    function recording_success(url)
+	    {
+	        console.log("Recording success callback");
+	        navigator.notification.activityStop();  
+	        $('#record-button').attr('src','record.png');
+	        $('#play-button').attr('src','play.png');
+	        $('#cd-button').attr('src','cd_remove.png');
+	    }
+
+	    function recording_failure(error)
+	    {
+	        navigator.notification.activityStop();  
+	        alert("Recording failed: " + error);
+	        console.log("Recording failed: " + error);
+	    }
   	</script>
   </head>
   <body onload="onBodyLoad()">
